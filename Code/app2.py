@@ -107,7 +107,7 @@ def focus_teethalign_logic(image_path):
                     "cn_img1": controlnet_img,
                     "cn_weight1": "1",
                     "cn_stop1": "0.5",
-                    "cn_type1": "ImagePrompt",
+                    "cn_type1": "PyraCanny",
                     "require_base64": "true"
             } 
     job_response = runpod_api.run_job(input_data)
