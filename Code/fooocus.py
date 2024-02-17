@@ -3,7 +3,7 @@ import requests
 class RunpodAPI:
     def __init__(self, api_key):
         # self.base_url = "https://api.runpod.ai/v2/j6ctvdmtlle2lt/"
-        self.base_url = "https://api.runpod.ai/v2/zftyue9toxg727/"
+        self.base_url = "https://api.runpod.ai/v2/fk64wqmhvr4f2w/"
         self.headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {api_key}",
