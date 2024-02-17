@@ -10,3 +10,4 @@ torchvision
 torch
 tqdm
 flask
+boto3
