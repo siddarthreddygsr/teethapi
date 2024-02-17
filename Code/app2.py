@@ -95,23 +95,21 @@ def focus_teethalign():
 
 def focus_teethalign_logic(image_path):
     image = im.open(image_path)
-    # image_np = np.array(image)
-    # base64_image = convert_to_base64(image_np)
-    # controlnet_img = cn_image_gen(image_path)
-    # mask_img = mask_generator(image_path)
+    image_np = np.array(image)
+    base64_image = convert_to_base64(image_np)
+    controlnet_img = cn_image_gen(image_path)
+    mask_img = mask_generator(image_path)
     input_data = {
-                "input": {
                     "api_name": "inpaint-outpaint",
                     "inpaint_additional_prompt": "veener teeth",
-                    "input_image": "http://0x0.st/HnXJ.png",
-                    "input_mask": "https://i.imgur.com/tC6DV8I.png",
-                    "cn_img1": "https://i.imgur.com/RKi2BAY.png",
+                    "input_image": base64_image,
+                    "input_mask": mask_img,
+                    "cn_img1": controlnet_img,
                     "cn_weight1": "1",
                     "cn_stop1": "0.5",
                     "cn_type1": "ImagePrompt",
                     "require_base64": "true"
-                }
-            }
+            } 
     job_response = runpod_api.run_job(input_data)
 
     return job_response
