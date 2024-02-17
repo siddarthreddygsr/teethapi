@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from np2b64 import convert_to_base64
+from np2b64 import convert_to_url
 
 def mask_generator(image_path):
     interpreter = tf.lite.Interpreter(model_path="model_files/teeth_segment.tflite")
@@ -42,6 +42,6 @@ def mask_generator(image_path):
     # Convert the numpy array to a PIL Image
     data = Image.fromarray(black_white_mask)
     image_np = np.array(data)
-    return convert_to_base64(image_np)
+    return convert_to_url(image_np)
 
-mask_generator("../Data/case1.jpg")
+# mask_generator("../Data/case1.jpg")

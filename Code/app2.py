@@ -11,7 +11,7 @@ import yaml
 from werkzeug.utils import secure_filename
 import time
 import numpy as np
-from np2b64 import convert_to_base64
+from np2b64 import convert_to_url
 from controlnet_gen import cn_image_gen
 from maskgen import mask_generator
 from fooocus import RunpodAPI
@@ -96,7 +96,7 @@ def focus_teethalign():
 def focus_teethalign_logic(image_path):
     image = im.open(image_path)
     image_np = np.array(image)
-    base64_image = convert_to_base64(image_np)
+    base64_image = convert_to_url(image_np)
     controlnet_img = cn_image_gen(image_path)
     mask_img = mask_generator(image_path)
     input_data = {
