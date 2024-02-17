@@ -28,7 +28,7 @@ def convert_to_url(img_np, out_type='uint8'):
     bucket_name = 'teethe'
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region_name=region_name)
     s3.upload_file(image_file_path, bucket_name, unique_filename)
-
+    os.remove(image_file_path)
     url = f"https://{bucket_name}.s3.{region_name}.amazonaws.com/{unique_filename}"
     return url
 
