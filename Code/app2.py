@@ -119,15 +119,15 @@ def check_status():
     # try:
     job_id = request.get_json()["jobid"]
     response = runpod_api.get_job_status(job_id)
-    # return response
-    img =  response['output'][0]['base64']
-    image_data = base64.b64decode(img)
-    image = im.open(BytesIO(image_data))
-    image.save('decoded_image.png')
-    print("image saved")
-    return jsonify({"status": response["status"]})
-    # except Exception as e:
-        # return jsonify({"error": str(e)})
+    try:
+        img =  response['output'][0]['base64']
+        image_data = base64.b64decode(img)
+        image = im.open(BytesIO(image_data))
+        img_np = np.array(image)
+        url = convert_to_url(img_np)
+        return url
+    except:
+        return response
 
 if __name__ == '__main__':
     app.run(debug=True,port=8000,host= '0.0.0.0')
