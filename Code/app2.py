@@ -23,7 +23,8 @@ app = Flask(__name__)
 api_key = "PT9H5DJMNWJ1PQKJW98PTT99COHABVR5MLEG4WY2"
 runpod_api = RunpodAPI(api_key)
 output_directory = "processed_files"
-host = "https://3y7wkrmlouh1fu-8888.proxy.runpod.net"
+# host = "https://3y7wkrmlouh1fu-8888.proxy.runpod.net"
+host = "https://2zlnyxfkq5gnaz-8888.proxy.runpod.net"
 
 # Create the output directory if it doesn't exist
 if not os.path.exists(output_directory):
