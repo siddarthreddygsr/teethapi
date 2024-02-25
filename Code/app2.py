@@ -25,8 +25,9 @@ app = Flask(__name__)
 api_key = "PT9H5DJMNWJ1PQKJW98PTT99COHABVR5MLEG4WY2"
 runpod_api = RunpodAPI(api_key)
 output_directory = "processed_files"
-# host = "https://3y7wkrmlouh1fu-8888.proxy.runpod.net"
-host = "https://2zlnyxfkq5gnaz-8888.proxy.runpod.net"
+
+def host_url(pod_id):
+    return f"https://{pod_id}-8888.proxy.runpod.net"
 
 # Create the output directory if it doesn't exist
 if not os.path.exists(output_directory):
@@ -128,6 +129,10 @@ def focus_teethalign_v2():
 
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
+    pod_id = request.form.get('pod_id', '')
+
+    if pod_id == '':
+        return {"Error":"Missing pod id"}
 
     if file:
         filename = secure_filename(file.filename)
@@ -136,11 +141,11 @@ def focus_teethalign_v2():
         temp_path = os.path.join(output_directory, unique_filename)
         file.save(temp_path)
 
-        result_response = focus_teethalign_logic_v2(temp_path)
+        result_response = focus_teethalign_logic_v2(temp_path,pod_id)
 
         return result_response
 
-def focus_teethalign_logic_v2(image_path):
+def focus_teethalign_logic_v2(image_path,pod_id):
     image = im.open(image_path)
     image_np = np.array(image)
     image_url = convert_to_url(image_np)
@@ -162,7 +167,7 @@ def focus_teethalign_logic_v2(image_path):
             "require_base64":True,
             "async_process": False
             }
-    response = requests.post(url=f"{host}/v2/generation/image-prompt",
+    response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-prompt",
                         data=json.dumps(params),
                         headers={"Content-Type": "application/json"})
     result = response.json()
