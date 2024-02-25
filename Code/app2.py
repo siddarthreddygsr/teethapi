@@ -168,9 +168,9 @@ def focus_teethalign_logic_v2(image_path):
     result = response.json()
     base = result[0]['base64']
     image_data = base64.b64decode(base)
-    filename = secure_filename(file.filename)
-    file_extension = filename.rsplit('.', 1)[1].lower()
-    unique_filename = f"{filename.split('.')[0]}-{int(time.time())}.{file_extension}"
+    # filename = secure_filename(file.filename)
+    file_extension = "png"
+    unique_filename = f"{"result"}-{int(time.time())}.{file_extension}"
     temp_path = os.path.join(output_directory, unique_filename)
     with open(unique_filename,"wb") as f:
         f.write(image_data)
