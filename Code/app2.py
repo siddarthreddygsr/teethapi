@@ -17,6 +17,8 @@ from maskgen import mask_generator
 from fooocus import RunpodAPI
 import base64
 from io import BytesIO
+import requests
+import json
 
 app = Flask(__name__)
 
