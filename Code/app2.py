@@ -23,6 +23,7 @@ app = Flask(__name__)
 api_key = "PT9H5DJMNWJ1PQKJW98PTT99COHABVR5MLEG4WY2"
 runpod_api = RunpodAPI(api_key)
 output_directory = "processed_files"
+host = "https://3y7wkrmlouh1fu-8888.proxy.runpod.net"
 
 # Create the output directory if it doesn't exist
 if not os.path.exists(output_directory):
@@ -111,6 +112,82 @@ def focus_teethalign_logic(image_path):
                     "require_base64": "true"
             } 
     job_response = runpod_api.run_job(input_data)
+
+    return job_response
+
+
+@app.route('/focus_teethalignment_submitter_v2', methods=['POST'])
+def focus_teethalign_v2():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    if file:
+        filename = secure_filename(file.filename)
+        file_extension = filename.rsplit('.', 1)[1].lower()
+        unique_filename = f"{filename.split('.')[0]}-{int(time.time())}.{file_extension}"
+        temp_path = os.path.join(output_directory, unique_filename)
+        file.save(temp_path)
+
+        result_response = focus_teethalign_logic_v2(temp_path)
+
+        return result_response
+
+def focus_teethalign_logic_v2(image_path):
+    image = im.open(image_path)
+    image_np = np.array(image)
+    image_url = convert_to_url(image_np)
+    controlnet_img = cn_image_gen(image_path)
+    mask_img = mask_generator(image_path)
+    params={
+            "prompt": "perfect teeth, shiny teeth,veneer teeth, super white teeth, perfect shape of teeth",
+            "negative_prompt" : "imperfect teeth",
+            "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
+            "input_image": image_url,
+            "input_mask": mask_img,
+            "image_prompts": [
+                {
+            "cn_img": controlnet_img,
+            "cn_stop": 0.6,
+            "cn_weight": 1,
+                "cn_type": "PyraCanny"
+                }],
+            "require_base64":True,
+            "async_process": False
+            }
+    response = requests.post(url=f"{host}/v2/generation/image-prompt",
+                        data=json.dumps(params),
+                        headers={"Content-Type": "application/json"})
+    result = response.json()
+    base = result[0]['base64']
+    image_data = base64.b64decode(base)
+    filename = secure_filename(file.filename)
+    file_extension = filename.rsplit('.', 1)[1].lower()
+    unique_filename = f"{filename.split('.')[0]}-{int(time.time())}.{file_extension}"
+    temp_path = os.path.join(output_directory, unique_filename)
+    with open(unique_filename,"wb") as f:
+        f.write(image_data)
+    image2 = im.open(unique_filename)
+    image_np2 = np.array(image2)
+    image_url2 = convert_to_url(image_np2)
+    return image_url2
+    
+    # input_data = {
+    #                 "api_name": "inpaint-outpaint",
+    #                 "inpaint_additional_prompt": "veener teeth",
+    #                 "input_image": base64_image,
+    #                 "input_mask": mask_img,
+    #                 "cn_img1": controlnet_img,
+    #                 "cn_weight1": "1",
+    #                 "cn_stop1": "0.5",
+    #                 "cn_type1": "PyraCanny",
+    #                 "require_base64": "true"
+    #         } 
+    # job_response = runpod_api.run_job(input_data)
 
     return job_response
 
