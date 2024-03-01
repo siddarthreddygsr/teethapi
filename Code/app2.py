@@ -27,7 +27,7 @@ runpod_api = RunpodAPI(api_key)
 output_directory = "processed_files"
 
 def host_url(pod_id):
-    return f"https://{pod_id}-8888.proxy.runpod.net"
+    return f"https://{pod_id}-8628.proxy.runpod.net"
 
 # Create the output directory if it doesn't exist
 if not os.path.exists(output_directory):
