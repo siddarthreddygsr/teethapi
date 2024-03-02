@@ -157,6 +157,7 @@ def focus_teethalign_logic_v2(image_path,pod_id):
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
             "input_image": image_url,
             "input_mask": mask_img,
+            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
             "image_prompts": [
                 {
             "cn_img": controlnet_img,
