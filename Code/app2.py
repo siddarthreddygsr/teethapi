@@ -157,7 +157,15 @@ def focus_teethalign_logic_v2(image_path,pod_id):
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
             "input_image": image_url,
             "input_mask": mask_img,
-            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
+            "loras": [
+                {
+                  "model_name": "sd_xl_offset_example-lora_1.0.safetensors",
+                  "weight": 0.1
+                }
+            ],
+            "advanced_params":{
+                "mixing_image_prompt_and_inpaint": True
+            },   
             "image_prompts": [
                 {
             "cn_img": controlnet_img,
