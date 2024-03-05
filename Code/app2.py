@@ -163,13 +163,14 @@ def focus_teethalign_logic_v2(image_path,pod_id):
                   "weight": 0.1
                 }
             ],
+            "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
             "advanced_params":{
                 "mixing_image_prompt_and_inpaint": True
             },   
             "image_prompts": [
                 {
             "cn_img": controlnet_img,
-            "cn_stop": 0.6,
+            "cn_stop": 0.8,
             "cn_weight": 1,
                 "cn_type": "PyraCanny"
                 }],
