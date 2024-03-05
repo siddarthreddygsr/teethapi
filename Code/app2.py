@@ -149,11 +149,11 @@ def focus_teethalign_logic_v2(image_path,pod_id):
     image = im.open(image_path)
     image_np = np.array(image)
     image_url = convert_to_url(image_np)
-    controlnet_img = cn_image_gen(image_path)
+    # controlnet_img = cn_image_gen(image_path)
     mask_img = mask_generator(image_path)
     params={
-            "prompt": "perfect teeth, shiny teeth,veneer teeth, super white teeth, perfect shape of teeth",
-            "negative_prompt" : "imperfect teeth",
+            "prompt": "perfect teeth, shiny teeth,veneer teeth, super white teeth, perfect shape of teeth, perfect size teeth, large teeth, closed mouth",
+            "negative_prompt" : "imperfect teeth, small teeth, imperfect shape, open mouth",
             "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
             "input_image": image_url,
             "input_mask": mask_img,
@@ -164,20 +164,20 @@ def focus_teethalign_logic_v2(image_path,pod_id):
                 }
             ],
             "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
-            "advanced_params":{
-                "mixing_image_prompt_and_inpaint": True
-            },   
-            "image_prompts": [
-                {
-            "cn_img": controlnet_img,
-            "cn_stop": 0.8,
-            "cn_weight": 1,
-                "cn_type": "PyraCanny"
-                }],
+            # "advanced_params":{
+            #     "mixing_image_prompt_and_inpaint": True
+            # },   
+            # "image_prompts": [
+            #     {
+            # "cn_img": controlnet_img,
+            # "cn_stop": 0.8,
+            # "cn_weight": 1,
+            #     "cn_type": "PyraCanny"
+            #     }],
             "require_base64":True,
             "async_process": False
             }
-    response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-prompt",
+    response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-inpaint-outpaint",
                         data=json.dumps(params),
                         headers={"Content-Type": "application/json"})
     result = response.json()
