@@ -167,16 +167,16 @@ def focus_teethalign_logic_v2(image_path,pod_id):
                 }
             ],
             "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
-            # "advanced_params":{
-            #     "mixing_image_prompt_and_inpaint": True
-            # },   
-            # "image_prompts": [
-            #     {
-            # "cn_img": controlnet_img,
-            # "cn_stop": 0.8,
-            # "cn_weight": 1,
-            #     "cn_type": "PyraCanny"
-            #     }],
+            "advanced_params":{
+                "mixing_image_prompt_and_inpaint": True
+            },   
+            "image_prompts": [
+                {
+            "cn_img": controlnet_img,
+            "cn_stop": 0.8,
+            "cn_weight": 1,
+                "cn_type": "PyraCanny"
+                }],
             "require_base64":True,
             "async_process": False
             }
@@ -197,7 +197,7 @@ def focus_teethalign_logic_v2(image_path,pod_id):
     image_url2 = convert_to_url(image_np2)
     return image_url2
     
-    # input_data = {
+    #input_data = {
     #                 "api_name": "inpaint-outpaint",
     #                 "inpaint_additional_prompt": "veener teeth",
     #                 "input_image": base64_image,
