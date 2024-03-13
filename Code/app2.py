@@ -167,19 +167,19 @@ def focus_teethalign_logic_v2(image_path,pod_id):
                 }
             ],
             "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
-            "advanced_params":{
-                "mixing_image_prompt_and_inpaint": True
-            },   
-            "image_prompts": [
-                {
-            "cn_img": controlnet_img,
-            "cn_stop": 0.8,
-            "cn_weight": 1,
-                "cn_type": "PyraCanny"
-                }],
-            "require_base64":True,
-            "async_process": False
-            }
+            # "advanced_params":{
+            #     "mixing_image_prompt_and_inpaint": True
+            # },   
+            # "image_prompts": [
+            #     {
+            # "cn_img": controlnet_img,
+            # "cn_stop": 0.8,
+            # "cn_weight": 1,
+            #     "cn_type": "PyraCanny"
+            #     }],
+            # "require_base64":True,
+            # "async_process": False
+            # }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-inpaint-outpaint",
                         data=json.dumps(params),
                         headers={"Content-Type": "application/json"})
