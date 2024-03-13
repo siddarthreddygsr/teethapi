@@ -104,6 +104,9 @@ def focus_teethalign_logic(image_path):
     base64_image = convert_to_url(image_np)
     controlnet_img = cn_image_gen(image_path)
     mask_img = mask_generator(image_path)
+    laplacian = cv2.Laplacian(mask_img, cv2.CV_64F)
+    laplacian = np.uint8(np.absolute(laplacian))
+    mask_img = cv2.addWeighted(blurred_mask, 1.5, laplacian, -0.5, 0)
     input_data = {
                     "api_name": "inpaint-outpaint",
                     "inpaint_additional_prompt": "veener teeth",
