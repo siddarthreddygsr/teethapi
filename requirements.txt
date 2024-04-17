@@ -9,3 +9,5 @@ pillow
 tqdm
 flask
 boto3
+torch
+torchvision
