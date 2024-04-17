@@ -179,7 +179,7 @@ def focus_teethalign_logic_v2(image_path,pod_id):
             #     }],
             # "require_base64":True,
             # "async_process": False
-            # }
+            }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-inpaint-outpaint",
                         data=json.dumps(params),
                         headers={"Content-Type": "application/json"})
