@@ -157,15 +157,9 @@ def focus_teethalign_logic_v2(image_path,pod_id):
     params={
             "prompt": "perfect teeth, shiny teeth,veneer teeth, super white teeth, perfect shape of teeth, perfect size teeth, large teeth, closed mouth",
             "negative_prompt" : "imperfect teeth, small teeth, imperfect shape, open mouth",
-            "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative"],
+            "style_selections":["Fooocus V2,Fooocus Enhance,Fooocus Sharp, Fooocus Negative,Fooocus Masterpiece"],
             "input_image": image_url,
             "input_mask": mask_img,
-            "loras": [
-                {
-                  "model_name": "sd_xl_offset_example-lora_1.0.safetensors",
-                  "weight": 0.1
-                }
-            ],
             "base_model_name" : "juggernautXL_v8Rundiffusion.safetensors",
             # "advanced_params":{
             #     "mixing_image_prompt_and_inpaint": True
@@ -177,8 +171,8 @@ def focus_teethalign_logic_v2(image_path,pod_id):
             # "cn_weight": 1,
             #     "cn_type": "PyraCanny"
             #     }],
-            # "require_base64":True,
-            # "async_process": False
+            "require_base64":True,
+            "async_process": False
             }
     response = requests.post(url=f"{host_url(pod_id)}/v2/generation/image-inpaint-outpaint",
                         data=json.dumps(params),
